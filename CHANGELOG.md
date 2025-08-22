@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### v0.18.0
-* Updated project's setup.py to the requirement of python 3.6, due to use of f-strings. 
+* Improved color contrast for charts (gold, blue)
+* Fixed make_array() so it doesn't auto-convert booleans to integers
+* Updated project's setup.py to document that we require python 3.6, due to use of f-strings. 
+* Eliminated deprecation error for pkg_resources by moving to importlib.resources
 
 ### v0.17.6
 * Removed a deprecated function which allowed calling non-table attributes on a table.
