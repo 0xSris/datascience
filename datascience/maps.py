@@ -10,7 +10,7 @@ from folium.plugins import MarkerCluster, BeautifyIcon
 import pandas
 import numpy as np
 import matplotlib as mpl
-import pkg_resources
+import importlib.resources
 import branca.colormap as cm
 
 import abc
@@ -935,7 +935,8 @@ def get_coordinates(table, replace_columns=False, remove_nans=False):
         Table with latitude and longitude coordinates 
     """
     assert "zip code" in table.labels or (("city" in table.labels or "county" in table.labels) and "state" in table.labels)
-    ref = Table.read_table(pkg_resources.resource_filename(__name__, "geodata/geocode_states.csv"))
+    with importlib.resources.files(__package__).joinpath("geodata/geocode_states.csv").open("r", encoding="utf-8") as f:
+        ref = Table.read_table(f)
 
     index_name = "".join(table.labels) # Ensures that index can't possibly be one of the preexisting columns
     index_name += " "
