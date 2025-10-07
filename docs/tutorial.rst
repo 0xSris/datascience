@@ -440,7 +440,6 @@ The maps modules also allows you to make custom maps with markers, circles and r
     # make a region with your geojson object
     region = Region(geojson)
     
-    
     # Initialize the map  
     custom_map = Map(features=[marker1, marker2, circle, region],       # specifies the features
              width=800,                                                 # specifies a custom width
