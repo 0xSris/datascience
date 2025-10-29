@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Unreleased (or v0.18.1)
+* Added optional `seed` parameter to `sample_proportions()` for reproducible results
+* Added optional `seed` parameter to `proportions_from_distribution()` for reproducible results
+* Fixed bug where `proportions_from_distribution()` ignored the `column_name` parameter
+
 ### v0.18.0
 * Improved color contrast for charts (gold, blue)
 * Fixed make_array() so it doesn't auto-convert booleans to integers
