@@ -103,6 +103,30 @@ def test_proportions_from_distribution():
     assert [x in (0, 0.5, 1) for x in ds.sample_proportions(2, ds.make_array(.2, .3, .5))]
 
 
+def test_sample_proportions_seed():
+    """Test seed parameter and backward compatibility"""
+    result1 = ds.sample_proportions(1000, [0.5, 0.5], seed=42)
+    result2 = ds.sample_proportions(1000, [0.5, 0.5], seed=42)
+    assert np.array_equal(result1, result2)
+    
+    result3 = ds.sample_proportions(1000, [0.5, 0.5], seed=99)
+    assert not np.array_equal(result1, result3)
+
+
+def test_proportions_from_distribution_seed_and_column_name():
+    """Test seed parameter and column_name bug fix"""
+    t = ds.Table().with_column('probs', [0.6, 0.4])
+    
+    result1 = ds.proportions_from_distribution(t, 'probs', 1000, seed=42)
+    result2 = ds.proportions_from_distribution(t, 'probs', 1000, seed=42)
+    assert np.array_equal(result1.column(1), result2.column(1))
+    assert _round_eq(1, sum(result1.column(1)))
+    
+    result3 = ds.proportions_from_distribution(t, 'probs', 1000, column_name='My Sample')
+    assert 'My Sample' in result3.labels
+    assert result3.num_columns == 2
+
+
 def test_is_non_string_iterable():
     is_string = 'hello'
     assert ds.is_non_string_iterable(is_string) == False
