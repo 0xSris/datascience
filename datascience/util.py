@@ -126,7 +126,7 @@ def plot_normal_cdf(rbound=None, lbound=None, mean=0, sd=1):
 plot_cdf_area = plot_normal_cdf
 
 
-def sample_proportions(sample_size: int, probabilities):
+def sample_proportions(sample_size: int, probabilities, seed=None):
     """Return the proportion of random draws for each outcome in a distribution.
 
     This function is similar to np.random.Generator.multinomial, but returns proportions
@@ -137,15 +137,17 @@ def sample_proportions(sample_size: int, probabilities):
 
         ``probabilities``: An array of probabilities that forms a distribution.
 
+        ``seed``: Optional seed for reproducibility. If None, results will be random.
+
     Returns:
         An array with the same length as ``probability`` that sums to 1.
     """
-    rng = np.random.default_rng()
+    rng = np.random.default_rng(seed)
     return rng.multinomial(sample_size, probabilities) / sample_size
 
 
 def proportions_from_distribution(table, label, sample_size,
-                                  column_name='Random Sample'):
+                                  column_name='Random Sample', seed=None):
     """
     Adds a column named ``column_name`` containing the proportions of a random
     draw using the distribution in ``label``.
@@ -165,6 +167,8 @@ def proportions_from_distribution(table, label, sample_size,
         ``column_name``: The name of the new column that contains the sampled
             proportions. Defaults to ``'Random Sample'``.
 
+        ``seed``: Optional seed for reproducibility. If None, results will be random.
+
     Returns:
         A copy of ``table`` with a column ``column_name`` containing the
         sampled proportions. The proportions will sum to 1.
@@ -173,8 +177,8 @@ def proportions_from_distribution(table, label, sample_size,
         ``ValueError``: If the ``label`` is not in the table, or if
             ``table.column(label)`` does not sum to 1.
     """
-    proportions = sample_proportions(sample_size, table.column(label))
-    return table.with_column('Random Sample', proportions)
+    proportions = sample_proportions(sample_size, table.column(label), seed)
+    return table.with_column(column_name, proportions)
 
 
 def table_apply(table, func, subset=None):
