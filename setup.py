@@ -3,8 +3,8 @@ from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
 
-if sys.version_info < (3, 6):
-    raise ValueError('This package requires python >= 3.6')
+if sys.version_info < (3, 8):
+    raise ValueError('This package requires python >= 3.8')
 
 with open('requirements.txt') as fid:
     install_requires = [l.strip() for l in fid.readlines() if l]
@@ -43,20 +43,20 @@ class PyTest(TestCommand):
 
 
 setup(
-    name = 'datascience',
-    packages = ['datascience'],
-    python_requires='>=3.6',
-    version = version,
-    install_requires = install_requires,
-    tests_require = tests_requires,
-    cmdclass = {'test': PyTest},
-    description = 'A Jupyter notebook Python library for introductory data science',
-    long_description = 'A Jupyter notebook Python library for introductory data science',
-    author = 'John DeNero, David Culler, Alvin Wan, Sam Lau',
-    author_email = 'ds8-instructors@berkeley.edu',
-    url = 'https://github.com/data-8/datascience',
-    download_url = 'https://github.com/data-8/datascience/archive/%s.zip' % version,
-    keywords = ['data', 'tools', 'berkeley'],
-    classifiers = [],
+    name='datascience',
+    packages=['datascience'],
+    python_requires='>=3.8',
+    version=version,
+    install_requires=install_requires,
+    tests_require=tests_requires,
+    cmdclass={'test': PyTest},
+    description='A Jupyter notebook Python library for introductory data science',
+    long_description='A Jupyter notebook Python library for introductory data science',
+    author='John DeNero, David Culler, Alvin Wan, Sam Lau',
+    author_email='ds8-instructors@berkeley.edu',
+    url='https://github.com/data-8/datascience',
+    download_url='https://github.com/data-8/datascience/archive/%s.zip' % version,
+    keywords=['data', 'tools', 'berkeley'],
+    classifiers=[],
     package_data={"datascience": ["geodata/*.csv"]}
 )
